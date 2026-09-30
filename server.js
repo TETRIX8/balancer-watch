@@ -54,6 +54,9 @@ wss.on('connection', (ws) => {
       let room = rooms.get(roomId);
       if (!room) { room = { clients: new Set(), users: new Map(), hostId: null, state: {}, chat: [] }; rooms.set(roomId, room); }
       if (!room.hostId && msg.isHost) room.hostId = userId;
+      if (msg.isHost && msg.movieId && msg.token) {
+        room.state = { ...room.state, movieId: String(msg.movieId).slice(0, 32), token: String(msg.token).slice(0, 4096) };
+      }
       room.clients.add(ws);
       room.users.set(userId, { name });
       ws.room = room;

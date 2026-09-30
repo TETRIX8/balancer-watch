@@ -37,7 +37,7 @@ function connect(){
   socket.onopen=()=>{
     if(bc!==socket){socket.close();return}
     wsConnected=true;reconnectDelay=1000;setConn('Онлайн',true);
-    broadcast({type:'join',roomId,userId:myId,name:myName,isHost});
+    broadcast({type:'join',roomId,userId:myId,name:myName,isHost,movieId:currentMovieId,token:currentToken});
     if(currentMovieId&&currentToken)loadFlow(currentMovieId,currentToken);
     if(isHost&&currentToken)setTimeout(()=>{if(bc===socket)broadcast({type:'changeMovie',movieId:currentMovieId,token:currentToken})},200);
     status('Подключено');showRoom();
