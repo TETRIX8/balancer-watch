@@ -82,6 +82,13 @@ wss.on('connection', (ws) => {
       if (!room.hostId || !room.users.has(room.hostId)) room.hostId = userId;
       publishUsers(room); send(ws, { type: 'state', roomId, isHost: room.hostId === userId, ...room.state }); return;
     }
+    if (msg.type === 'deleteRoom' && room.hostId === userId) {
+      broadcast(room, { type: 'roomDeleted' });
+      for (const client of room.clients) client.room = null;
+      rooms.delete(roomId);
+      for (const client of room.clients) client.close(1000, 'room deleted');
+      return;
+    }
     if (msg.type === 'voice-join') {
       for (const client of room.clients) {
         if (client === ws || !client.userId) continue;
