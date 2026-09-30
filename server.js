@@ -64,6 +64,9 @@ wss.on('connection', (ws) => {
       send(ws, { type: 'state', roomId, isHost: room.hostId === userId, ...room.state });
       for (const item of room.chat) send(ws, item);
       publishUsers(room);
+      if (msg.isHost && room.state.movieId && room.state.token) {
+        broadcast(room, { type: 'changeMovie', movieId: room.state.movieId, token: room.state.token }, ws);
+      }
       return;
     }
 
