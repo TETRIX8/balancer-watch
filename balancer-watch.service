@@ -1,0 +1,21 @@
+[Unit]
+Description=Balancer Watch local room server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=balancerwatch
+Group=balancerwatch
+WorkingDirectory=/opt/balancer-watch
+ExecStart=/usr/bin/node /opt/balancer-watch/server.js
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/balancer-watch
+
+[Install]
+WantedBy=multi-user.target

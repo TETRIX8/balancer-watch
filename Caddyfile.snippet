@@ -1,0 +1,20 @@
+http://tetrixfilm.duckdns.org {
+    redir https://{host}{uri} permanent
+}
+
+https://tetrixfilm.duckdns.org {
+    encode zstd gzip
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+    }
+    route {
+        handle /ws* {
+            reverse_proxy 127.0.0.1:8765
+        }
+        root * /var/www/tetrixfilm.duckdns.org
+        try_files {path} /index.html
+        file_server
+    }
+}

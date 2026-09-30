@@ -1,0 +1,13 @@
+{
+  "name": "balancer-watch",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local watch-together rooms with chat and WebRTC voice signaling",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
